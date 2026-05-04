@@ -18,17 +18,14 @@ import java.util.Set;
 @Table(name = "Users")
 public class User {
 
-    // Khoá chính
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserId")
     private Integer userId;
 
-    // Tên hiển thị
     @Column(name = "FullName", length = 100)
     private String fullName;
 
-    // Email đăng nhập (unique)
     @Column(name = "Email", length = 100, unique = true)
     private String email;
 
@@ -36,19 +33,15 @@ public class User {
     @Column(name = "PasswordHash", length = 255)
     private String passwordHash;
 
-    // Số điện thoại
-    @Column(name = "Phone", length = 20)
+    @Column(name = "Phone", length = 10)
     private String phone;
 
-    // URL avatar
     @Column(name = "AvatarUrl", length = 255)
     private String avatarUrl;
 
-    // Thời điểm tạo user
     @Column(name = "CreatedAt")
     private LocalDateTime createdAt;
 
-    // Cờ active/inactive
     @Column(name = "IsActive")
     private Boolean isActive;
 

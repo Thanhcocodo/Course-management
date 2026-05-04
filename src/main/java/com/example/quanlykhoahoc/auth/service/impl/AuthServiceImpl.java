@@ -31,6 +31,7 @@ public class AuthServiceImpl implements AuthService {
     // Repository thao tác với DB
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+
     // Dùng để hash/verify mật khẩu (BCrypt)
     private final PasswordEncoder passwordEncoder;
 
@@ -42,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
 
         // Check email đã tồn tại chưa
         if (userRepository.existsByEmail(email)) {
-            throw new BadRequestException("Email already exists");
+            throw new BadRequestException("Email này đã tồn tại.");
         }
 
         // Tìm role mặc định; nếu chưa có thì tạo mới trong DB
@@ -76,16 +77,16 @@ public class AuthServiceImpl implements AuthService {
 
         // Tìm user theo email
         User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("User not found"));
+                .orElseThrow(() -> new NotFoundException("Không tìm thấy người dùng"));
 
         // Không cho login nếu tài khoản bị inactive
         if (Boolean.FALSE.equals(user.getIsActive())) {
-            throw new BadRequestException("User is inactive");
+            throw new BadRequestException("Tài khoản đã bị vô hiệu hóa");
         }
 
         // Verify password: so sánh password client gửi lên với hash trong DB
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            throw new BadRequestException("Invalid credentials");
+            throw new BadRequestException("Thông tin đăng nhập không hợp lệ");
         }
 
         // Trả DTO (không trả passwordHash)
