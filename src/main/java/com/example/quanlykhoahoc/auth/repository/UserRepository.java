@@ -5,11 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-// Repository thao tác với bảng Users (entity User).
-// Kế thừa JpaRepository để có sẵn CRUD + paging/sorting.
 public interface UserRepository extends JpaRepository<User, Integer> {
-    // Tìm user theo email (dùng cho login)
-    Optional<User> findByEmail(String email);
-    // Check nhanh email đã tồn tại chưa (dùng cho register)
-    boolean existsByEmail(String email);
+
+    Optional<User> findByEmail(String email); //Tìm xem có email không (Optional tránh bị null khi không tìm thấy dữ liệu)
+
+    boolean existsByEmail(String email); //Kiểm tra xem email có bị trùng không
 }
