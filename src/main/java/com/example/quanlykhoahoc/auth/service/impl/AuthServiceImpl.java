@@ -68,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
         }
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            throw new BadRequestException("Thông tin đăng nhập không hợp lệ");
+            throw new BadRequestException("Mật khẩu không đúng");
         }
 
         return toAuthResponse(user);
